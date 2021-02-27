@@ -1,0 +1,13 @@
+parameters:
+  solution: 
+  workingDir:
+  configuration:
+  
+steps:
+- script: dotnet restore ${{ parameters.solution }}
+  displayName: 'Restore packages'
+  workingDirectory: ${{ parameters.workingDir }}
+  
+- script: dotnet build ${{ parameters.solution }} --configuration ${{ parameters.configuration }}
+  displayName: 'Build solution (${{ parameters.configuration }})'
+  workingDirectory: ${{ parameters.workingDir }}

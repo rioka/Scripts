@@ -1,0 +1,11 @@
+parameters:
+  sqlVersion: '13.0'
+  runWhen: true
+
+steps:  
+- task: PowerShell@2
+  displayName: 'Create and start a SQL Server 2016 localdb instance (v${{ parameters.sqlVersion }})'
+  inputs:
+    targetType: 'inline'
+    script: 'sqllocaldb create "v${{ parameters.sqlVersion }}" ${{ parameters.sqlVersion }} -s'
+  condition: ${{ parameters.runWhen }}

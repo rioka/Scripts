@@ -1,0 +1,18 @@
+parameters:
+#- name: solution
+#  default: '**/*.sln'
+  solution: '**/*.sln'
+
+steps:  
+- task: NuGetToolInstaller@0
+  displayName: 'Use NuGet'
+  inputs:
+    versionSpec: 5.x
+
+# use nuget.org and internal feed (named "comm", ID used here, as set from UI)
+- task: NuGetCommand@2
+  displayName: 'NuGet restore'
+  inputs:
+    restoreSolution: '${{parameters.solution}}'
+    feedsToUse: 'select'
+    vstsFeed: '/171f5ac1-937c-4eb5-b532-c9b35a43fb7a'

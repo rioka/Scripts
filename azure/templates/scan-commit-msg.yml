@@ -1,0 +1,33 @@
+parameters:
+- name: marker
+  default: ''
+  type: string
+- name: updateVar
+  default: ''
+  type: string
+
+steps:  
+# use bash so that is works on all platforms
+- bash: |
+    if [ -z "$MARKER" ]; then
+      echo "##vso[task.logissue type=error;]Missing template parameter \"marker\""
+      echo "##vso[task.complete result=Failed;]"
+    fi
+    if [ -z "$UPDATEVAR" ]; then
+      echo "##vso[task.logissue type=error;]Missing template parameter \"updateVar\""
+      echo "##vso[task.complete result=Failed;]"
+    fi
+  env:
+    MARKER: ${{ parameters.marker }}
+    UPDATEVAR: ${{ parameters.updateVar }}
+  displayName: Check for required parameters
+  
+- powershell: |
+    Write-Host "marker is ${{ parameters.marker }}"
+    $commitMessage = (git log -1 --pretty=%B) | Out-String
+    if ($commitMessage.ToLower().Contains("${{ parameters.marker }}".ToLower()))
+    {
+      echo "##vso[task.setvariable variable=${{ parameters.updateVar }}]yes"
+    }
+
+  displayName: Search for '${{ parameters.marker }}' in commit message

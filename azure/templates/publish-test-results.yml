@@ -1,0 +1,18 @@
+parameters:
+  resultsFiles:
+  summaryFileLocation:
+  pathToSources:
+  
+steps:
+- task: PublishTestResults@2
+  displayName: 'Publish test results'
+  inputs:
+    testResultsFormat: 'NUnit'
+    testResultsFiles: '${{ parameters.resultsFiles }}'
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish code coverage results'
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '${{ parameters.summaryFileLocation }}'
+    pathToSources: '${{ parameters.pathToSources }}'

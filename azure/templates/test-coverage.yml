@@ -1,0 +1,19 @@
+parameters:
+  solution:
+  configuration:
+  workingDir:
+  logFilePath:
+  targetDir:
+  
+steps:
+- script: dotnet test ${{ parameters.solution }} --no-build --configuration ${{ parameters.configuration }} /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --logger:"nunit;LogFilePath=${{ parameters.logFilePath }}"
+  displayName: 'Run tests'
+  workingDirectory: ${{ parameters.workingDir }}
+
+- script: dotnet tool install dotnet-reportgenerator-globaltool --tool-path .
+  displayName: 'Install ReportGenerator'
+  workingDirectory: ${{ parameters.workingDir }}
+
+- script: reportgenerator "-reports:**/*cobertura*.xml" "-targetdir:${{ parameters.targetDir }}" -reporttypes:"HTMLSummary;Cobertura"
+  displayName: 'Generate code coverage report'
+  workingDirectory: ${{ parameters.workingDir }}
