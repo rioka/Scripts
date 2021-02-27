@@ -1,0 +1,22 @@
+<Project>
+
+  <PropertyGroup>
+    <PackageId>$(AssemblyName)</PackageId>
+    <PackageDescription>$(packageDescription)</PackageDescription>
+    <PackageProjectUrl>https://dev.azure.com/bitdeas/$(projectName)</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://dev.azure.com/bitdeas/$(projectName)/_git/$(projectName)</RepositoryUrl>
+    <PackageReleaseNotes>
+      <![CDATA[
+      For full release notes, see RELEASE-NOTES.md in repository
+    ]]>
+    </PackageReleaseNotes>
+    <!-- 
+    <RepositoryBranch>$(RepositoryBranch)</RepositoryBranch> 
+    -->
+    <PackageTags>$(packageTags)</PackageTags>
+    <Authors>rioka</Authors>
+  </PropertyGroup>
+  
+</Project>
